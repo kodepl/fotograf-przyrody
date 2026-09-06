@@ -7,3 +7,15 @@
   to = "https://www.fotograf-przyrody.pl/:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = "https://fotograf-przyrody.netlify.app/*"
+  to = "https://www.fotograf-przyrody.pl/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://main--fotograf-przyrody.netlify.app/*"
+  to = "https://www.fotograf-przyrody.pl/:splat"
+  status = 301
+  force = true
