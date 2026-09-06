@@ -10,7 +10,7 @@ const site = {
   author: "Marek Leśny",
   authorBio: "Fotograf terenowy. Czeka na światło dłużej niż na lepszy obiektyw.",
   authorRole: "Fotograf",
-  authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80",
+  authorAvatar: "/autor.svg",
   heroImage: u("photo-1441974231531-c6227db76b6e", 1800),
   covers: {
     Las: u("photo-1441974231531-c6227db76b6e"),
