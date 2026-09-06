@@ -1,0 +1,26 @@
+---
+const { class: className = "text-lichen underline decoration-lichen/40 underline-offset-4 hover:text-fog" } = Astro.props;
+const payload = "aGFzZXI4OEBnbWFpbC5jb20=";
+---
+<span class="js-em" data-x={payload} data-c={className} aria-label="E-mail"></span>
+<script is:inline>
+(function () {
+  function decode(b) { try { return atob(b); } catch (e) { return ""; } }
+  function go() {
+    document.querySelectorAll(".js-em").forEach(function (el) {
+      if (el.getAttribute("data-ok")) return;
+      var addr = decode(el.getAttribute("data-x") || "");
+      if (!addr || addr.indexOf(String.fromCharCode(64)) < 0) return;
+      var a = document.createElement("a");
+      a.href = "mai" + "lto:" + addr;
+      a.textContent = addr;
+      a.rel = "nofollow";
+      a.className = el.getAttribute("data-c") || "";
+      el.replaceWith(a);
+      el.setAttribute("data-ok", "1");
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go);
+  else go();
+})();
+</script>

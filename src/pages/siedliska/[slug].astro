@@ -1,0 +1,32 @@
+---
+import Teren from "../../layouts/Teren.astro";
+import { getCollection } from "astro:content";
+import site, { coverFor, habitatSlug } from "../../site.config";
+export async function getStaticPaths() {
+  return site.habitats.map((h) => ({ params: { slug: habitatSlug(h.name) }, props: { habitat: h } }));
+}
+const { habitat } = Astro.props;
+const posts = (await getCollection("kadry"))
+  .filter((p) => p.data.habitat === habitat.name)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<Teren title={habitat.name} description={habitat.blurb}>
+  <main class="mx-auto max-w-5xl px-4 py-12">
+    <p class="text-[10px] uppercase tracking-[0.3em] text-dusk">Siedlisko</p>
+    <h1 class="mt-2 font-display text-5xl font-bold">{habitat.name}</h1>
+    <p class="mt-4 max-w-xl text-mist">{habitat.blurb}</p>
+    <div class="mt-12 grid gap-8 sm:grid-cols-2">
+      {posts.map((post) => (
+        <article>
+          <a href={`/kadry/${post.slug}/`} class="film-edge block">
+            <img src={coverFor(post.data.habitat, post.data.image)} alt="" class="aspect-[4/3] w-full object-cover" />
+          </a>
+          <h2 class="mt-3 font-display text-2xl font-semibold">
+            <a href={`/kadry/${post.slug}/`} class="hover:text-lichen">{post.data.title}</a>
+          </h2>
+        </article>
+      ))}
+      {posts.length === 0 && <p class="text-mist">W tym siedlisku wkrótce kolejne kadry.</p>}
+    </div>
+  </main>
+</Teren>

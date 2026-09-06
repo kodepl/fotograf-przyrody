@@ -1,0 +1,35 @@
+---
+import Teren from "../../layouts/Teren.astro";
+import EmailLink from "../../components/EmailLink.astro";
+import site from "../../site.config";
+---
+<Teren title="Kontakt" description="Napisz">
+  <main class="mx-auto max-w-xl px-4 py-12">
+    <h1 class="font-display text-5xl font-bold">Kontakt</h1>
+    <p class="mt-4 text-mist">{site.address}</p>
+    <p class="mt-3"><EmailLink /></p>
+    <noscript><p class="mt-2 text-sm text-mist">Włącz JavaScript, żeby zobaczyć adres e-mail.</p></noscript>
+    <form id="contact-form" class="mt-10 space-y-4">
+      <input class="w-full border border-fog/20 bg-bark/40 px-4 py-3 text-fog placeholder:text-mist" name="name" placeholder="Imię" required />
+      <input class="w-full border border-fog/20 bg-bark/40 px-4 py-3 text-fog placeholder:text-mist" type="email" name="email" placeholder="E-mail" required />
+      <textarea class="w-full border border-fog/20 bg-bark/40 px-4 py-3 text-fog placeholder:text-mist" name="message" rows="5" placeholder="Wiadomość" required></textarea>
+      <button class="border border-lichen bg-lichen px-6 py-3 text-xs font-semibold uppercase tracking-widest text-moss hover:bg-dusk hover:border-dusk hover:text-fog" type="submit">Wyślij</button>
+    </form>
+    <script is:inline>
+    (function () {
+      var form = document.getElementById("contact-form");
+      if (!form) return;
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var to = atob("aGFzZXI4OEBnbWFpbC5jb20=");
+        var name = form.name.value || "";
+        var from = form.email.value || "";
+        var msg = form.message.value || "";
+        var subject = encodeURIComponent("Kontakt Fotograf Przyrody - " + name);
+        var body = encodeURIComponent("Od: " + from + "\n\n" + msg);
+        window.location.href = "mai" + "lto:" + to + "?subject=" + subject + "&body=" + body;
+      });
+    })();
+    </script>
+  </main>
+</Teren>

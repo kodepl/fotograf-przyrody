@@ -1,0 +1,33 @@
+---
+import Teren from "../../layouts/Teren.astro";
+import { getCollection } from "astro:content";
+import site, { coverFor } from "../../site.config";
+export async function getStaticPaths() {
+  const posts = await getCollection("kadry");
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await post.render();
+const cover = coverFor(post.data.habitat, post.data.image);
+const date = post.data.pubDate.toLocaleDateString("pl-PL", { day: "numeric", month: "long", year: "numeric" });
+---
+<Teren title={post.data.title} description={post.data.description} image={cover}>
+  <article>
+    <img src={cover} alt="" class="max-h-[60vh] w-full object-cover" />
+    <div class="mx-auto max-w-3xl px-4 py-10">
+      <p class="text-[10px] font-semibold uppercase tracking-[0.3em] text-dusk">{post.data.habitat} · {post.data.season} · {date}</p>
+      <h1 class="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">{post.data.title}</h1>
+      <p class="mt-4 text-lg italic text-mist">{post.data.description}</p>
+      <div class="mt-6 flex items-center gap-3 text-sm">
+        <img src={site.authorAvatar} alt="" class="h-11 w-11 rounded-full object-cover ring-2 ring-lichen/40" />
+        <div>
+          <p class="font-semibold text-fog">{post.data.author || site.author}</p>
+          <p class="text-xs text-mist">{post.data.authorBio || site.authorBio}</p>
+        </div>
+      </div>
+      <div class="prose prose-invert prose-headings:font-display prose-a:text-lichen mt-12 max-w-none prose-p:text-fog/90">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Teren>

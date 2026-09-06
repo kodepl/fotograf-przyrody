@@ -1,2 +1,4 @@
-# fotograf-przyrody
-fotograf-przyrody Netlify PBN
+# Fotograf Przyrody
+
+Notatki z terenu — Astro + Tailwind. Netlify.
+Domena: https://www.fotograf-przyrody.pl

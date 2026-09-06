@@ -1,0 +1,58 @@
+---
+import Teren from "../layouts/Teren.astro";
+import { getCollection } from "astro:content";
+import site, { coverFor, habitatSlug } from "../site.config";
+const posts = (await getCollection("kadry")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featured = posts[0];
+const strip = posts.slice(1, 5);
+const rest = posts.slice(5);
+---
+<Teren title={site.name} description={site.tagline} image={site.heroImage}>
+  <main>
+    {featured && (
+      <section class="relative">
+        <a href={`/kadry/${featured.slug}/`} class="block">
+          <img src={coverFor(featured.data.habitat, featured.data.image)} alt="" class="h-[70vh] min-h-[420px] w-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-moss via-moss/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 mx-auto max-w-6xl px-4 pb-12">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.3em] text-dusk">{featured.data.habitat} · {featured.data.season}</p>
+            <h1 class="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight text-fog md:text-6xl">{featured.data.title}</h1>
+            <p class="mt-4 max-w-xl text-lg text-mist">{featured.data.description}</p>
+          </div>
+        </a>
+      </section>
+    )}
+
+    <section class="mx-auto max-w-6xl px-4 py-12">
+      <div class="mb-8 flex flex-wrap gap-2">
+        {site.habitats.map((h) => (
+          <a href={`/siedliska/${habitatSlug(h.name)}/`} class="border border-fog/20 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-mist hover:border-lichen hover:text-lichen">{h.name}</a>
+        ))}
+      </div>
+
+      <div class="flex gap-4 overflow-x-auto pb-4">
+        {strip.map((post) => (
+          <a href={`/kadry/${post.slug}/`} class="film-edge w-56 shrink-0">
+            <img src={coverFor(post.data.habitat, post.data.image)} alt="" class="aspect-[3/4] w-full object-cover" />
+            <p class="mt-2 text-[10px] uppercase tracking-widest text-dusk">{post.data.habitat}</p>
+            <p class="font-display text-lg leading-snug text-fog">{post.data.title}</p>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {rest.map((post) => (
+          <article>
+            <a href={`/kadry/${post.slug}/`} class="film-edge block overflow-hidden">
+              <img src={coverFor(post.data.habitat, post.data.image)} alt="" class="aspect-[4/3] w-full object-cover transition duration-500 hover:scale-[1.03]" />
+            </a>
+            <p class="mt-3 text-[10px] uppercase tracking-widest text-dusk">{post.data.habitat} · {post.data.season}</p>
+            <h2 class="mt-1 font-display text-2xl font-semibold">
+              <a href={`/kadry/${post.slug}/`} class="hover:text-lichen">{post.data.title}</a>
+            </h2>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</Teren>

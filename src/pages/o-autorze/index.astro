@@ -1,0 +1,18 @@
+---
+import Teren from "../../layouts/Teren.astro";
+import site from "../../site.config";
+---
+<Teren title="O autorze" description="Kim jestem">
+  <main class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="font-display text-5xl font-bold">O autorze</h1>
+    <div class="mt-10 flex flex-col gap-6 border border-fog/15 bg-bark/30 p-8 sm:flex-row">
+      <img src={site.authorAvatar} alt="" class="h-32 w-32 rounded-full object-cover ring-2 ring-lichen/30" />
+      <div>
+        <p class="font-display text-3xl">{site.author}</p>
+        <p class="text-[10px] uppercase tracking-[0.3em] text-dusk">{site.authorRole}</p>
+        <p class="mt-4 leading-relaxed text-mist">{site.authorBio}</p>
+      </div>
+    </div>
+    <p class="mt-10 leading-relaxed text-mist">Fotograf Przyrody to dziennik terenowy. Bez poradników „jak dostać 100k followersów” i bez stockowych zachodu słońca z telefonu. Tylko to, co naprawdę widać, gdy wstaniesz przed ptakami.</p>
+  </main>
+</Teren>
