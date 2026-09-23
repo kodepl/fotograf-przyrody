@@ -10,6 +10,12 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 const cover = coverFor(post.data.habitat, post.data.image);
 const date = post.data.pubDate.toLocaleDateString("pl-PL", { day: "numeric", month: "long", year: "numeric" });
+const pile = (await getCollection("kadry")).sort((a, b) => +new Date(b.data.pubDate) - +new Date(a.data.pubDate));
+const here = pile.findIndex((p) => p.slug === post.slug);
+const newer = here > 0 ? pile[here - 1] : null;
+const older = here >= 0 && here < pile.length - 1 ? pile[here + 1] : null;
+const also = pile.filter((p) => p.slug !== post.slug).slice(0, 3);
+
 ---
 <Teren title={post.data.title} description={post.data.description} image={cover}>
   <article>
@@ -30,4 +36,20 @@ const date = post.data.pubDate.toLocaleDateString("pl-PL", { day: "numeric", mon
       </div>
     </div>
   </article>
+
+<section class="mx-auto max-w-3xl px-4 pb-20">
+  <p class="text-[10px] font-semibold uppercase tracking-[0.3em] text-dusk">Sąsiednie kadry</p>
+  <div class="mt-4 grid gap-4 sm:grid-cols-3">
+    {also.map((item) => (
+      <a href={"/kadry/" + item.slug + "/"}>
+        <img src={item.data.image} alt="" class="aspect-[4/3] w-full object-cover" />
+        <p class="mt-2 text-sm text-fog">{item.data.title}</p>
+      </a>
+    ))}
+  </div>
+  <div class="mt-6 flex justify-between text-sm text-lichen">
+    {older && <a href={"/kadry/" + older.slug + "/"}>← {older.data.title}</a>}
+    {newer && <a href={"/kadry/" + newer.slug + "/"}>{newer.data.title} →</a>}
+  </div>
+</section>
 </Teren>
