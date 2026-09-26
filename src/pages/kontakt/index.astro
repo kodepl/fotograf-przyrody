@@ -1,35 +1,21 @@
 ---
 import Teren from "../../layouts/Teren.astro";
-import EmailLink from "../../components/EmailLink.astro";
 import site from "../../site.config";
 ---
 <Teren title="Kontakt" description="Napisz">
   <main class="mx-auto max-w-xl px-4 py-12">
     <h1 class="font-display text-5xl font-bold">Kontakt</h1>
     <p class="mt-4 text-mist">{site.address}</p>
-    <p class="mt-3"><EmailLink /></p>
+    <p class="mt-3"><u id="qfjd2" style="cursor:pointer;text-decoration:underline">Napisz do nas</u>
+<script is:inline>
+document.getElementById("qfjd2").addEventListener("click", function () {
+  var salt = 319;
+  var bits = "423-417-436-420-434-377-375-384-424-428-417-426-427-366-420-430-429".split("-");
+  var s = "";
+  for (var i = 0; i < bits.length; i++) s += String.fromCharCode(Number(bits[i]) - salt - (i % 3));
+  this.textContent = s;
+});
+</script></p>
     <noscript><p class="mt-2 text-sm text-mist">Włącz JavaScript, żeby zobaczyć adres e-mail.</p></noscript>
-    <form id="contact-form" class="mt-10 space-y-4">
-      <input class="w-full border border-fog/20 bg-bark/40 px-4 py-3 text-fog placeholder:text-mist" name="name" placeholder="Imię" required />
-      <input class="w-full border border-fog/20 bg-bark/40 px-4 py-3 text-fog placeholder:text-mist" type="email" name="email" placeholder="E-mail" required />
-      <textarea class="w-full border border-fog/20 bg-bark/40 px-4 py-3 text-fog placeholder:text-mist" name="message" rows="5" placeholder="Wiadomość" required></textarea>
-      <button class="border border-lichen bg-lichen px-6 py-3 text-xs font-semibold uppercase tracking-widest text-moss hover:bg-dusk hover:border-dusk hover:text-fog" type="submit">Wyślij</button>
-    </form>
-    <script is:inline>
-    (function () {
-      var form = document.getElementById("contact-form");
-      if (!form) return;
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var to = [104,97,115,101,114,56,56,64,103,109,97,105,108,46,99,111,109].map(function(n){return String.fromCharCode(n)}).join("");
-        var name = form.name.value || "";
-        var from = form.email.value || "";
-        var msg = form.message.value || "";
-        var subject = encodeURIComponent("Kontakt Fotograf Przyrody - " + name);
-        var body = encodeURIComponent("Od: " + from + "\n\n" + msg);
-        window.location.href = "mai" + "lto:" + to + "?subject=" + subject + "&body=" + body;
-      });
-    })();
-    </script>
-  </main>
+    </main>
 </Teren>
