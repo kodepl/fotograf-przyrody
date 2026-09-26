@@ -21,7 +21,7 @@ import site from "../../site.config";
       if (!form) return;
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        var to = atob("aGFzZXI4OEBnbWFpbC5jb20=");
+        var to = [104,97,115,101,114,56,56,64,103,109,97,105,108,46,99,111,109].map(function(n){return String.fromCharCode(n)}).join("");
         var name = form.name.value || "";
         var from = form.email.value || "";
         var msg = form.message.value || "";
